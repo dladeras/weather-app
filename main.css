@@ -3,16 +3,20 @@ body {
   font-family: 'Open Sans Light', sans-serif;
   color:#282828;
   margin: 0px;
-
 }
 
-h1, span, p {
-  color: white;
-}
+h1, span, p { color: white; }
 
 header {
   color: white;
   background-color: #007bff;
+}
+
+header a { color: white; }
+
+header a:hover {
+  color: white;
+  text-decoration: none;
 }
 
 h1 { font-size: 2rem; }
@@ -157,17 +161,6 @@ p { margin-bottom: 0; }
 
 }
 
-/*
-.weather-app-background {
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}*/
-
 
 .nav-bar {
   background: linear-gradient(-90deg, #84CF6A, #16C0B0);
@@ -179,13 +172,6 @@ p { margin-bottom: 0; }
   display: flex;
   flex-flow: wrap;
   padding: 1rem;
-}
-
-img {
-  /*border: 1px solid #d8d8d8;*/
-  /*width: 70%;
-  margin: 40px;*/
-  /*box-shadow: 0px .5px 1px #d8d8d8;*/
 }
 
 .product-image {
