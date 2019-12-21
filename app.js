@@ -31,7 +31,19 @@ var weatherApp = new Vue({
   },
   methods: {
     onSubmit() {
+      // var url1 = 'http://openweathermap.org/data/2.5/forecast/daily?id=524901&lang=zh_cn&appid=d8dc20c3264fd9ad006e15e190adbbb9';
       var url1 = 'http://api.openweathermap.org/data/2.5/weather?q=' + this.name + '&units=metric&APPID=d8dc20c3264fd9ad006e15e190adbbb9';
+
+      axios.get(url1)
+        .then(response => {
+
+          this.name = response.data.name;
+          this.city = response.data.name + ',';
+
+          })
+          .catch(error => {
+            console.log(error);
+          });
 
       // Get data from Open Weather API
       axios.get(url1)

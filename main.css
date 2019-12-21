@@ -10,6 +10,11 @@ h1, span, p {
   color: white;
 }
 
+header {
+  color: white;
+  background-color: #007bff;
+}
+
 h1 { font-size: 2rem; }
 
 p { margin-bottom: 0; }
@@ -135,10 +140,6 @@ p { margin-bottom: 0; }
   #weather-form {
     max-width: 30%;
     margin: auto;
-  }
-
-  #weather .weather-status {
-    padding-top: 50%;
   }
 
   #weather .weather-status .col-md-3 {
