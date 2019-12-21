@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Weather App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="weather-icons.css">
+    <link rel="stylesheet" href="weather-icons-wind.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:extra-light|Vast+Shadow" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+        <!-- <div id="app" class="weather-app-background" v-bind:style="{ background: 'url(assets/images/clouds2.jpg) no-repeat center center fixed' }"> -->
+        <div id="app" class="weather-app-background" v-bind:style="{ background: 'url(' + weatherBackgroundImage + ') no-repeat center center fixed' }">
+        <!-- <div id="app" class="weather-app-background"> -->
+            <div class="weather-app-wrapper  p-4">
+                <div class="weather-form-container container p-3">
+                    <form id="weather-form" class="form-group" @submit.prevent="onSubmit">
+                        <input type="text" class="form-control" v-model="name" placeholder="Search">
+                        <button type="submit" v-on:click='onSubmit' class="">
+                            <img class="search-icon" alt="svgImg" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNjQiIGhlaWdodD0iNjQiCnZpZXdCb3g9IjAgMCAxMjggMTI4IgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMDguOSwxMDguOUwxMDguOSwxMDguOWMtMi4zLDIuMy02LjEsMi4zLTguNSwwTDg3LjcsOTYuMmMtMi4zLTIuMy0yLjMtNi4xLDAtOC41bDAsMGMyLjMtMi4zLDYuMS0yLjMsOC41LDBsMTIuNywxMi43QzExMS4yLDEwMi44LDExMS4yLDEwNi42LDEwOC45LDEwOC45eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik01Mi4zIDE3LjI5OTk5OTk5OTk5OTk5N0EzNSAzNSAwIDEgMCA1Mi4zIDg3LjNBMzUgMzUgMCAxIDAgNTIuMyAxNy4yOTk5OTk5OTk5OTk5OTdaIiB0cmFuc2Zvcm09InJvdGF0ZSgtNDUuMDAxIDUyLjMzNyA1Mi4zMzgpIj48L3BhdGg+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTUyLjMgMTcuMjk5OTk5OTk5OTk5OTk3QTM1IDM1IDAgMSAwIDUyLjMgODcuM0EzNSAzNSAwIDEgMCA1Mi4zIDE3LjI5OTk5OTk5OTk5OTk5N1oiIHRyYW5zZm9ybT0icm90YXRlKC00NS4wMDEgNTIuMzM3IDUyLjMzOCkiPjwvcGF0aD48cGF0aCBmaWxsPSIjNzFjMmZmIiBkPSJNNTIuMyA4NC4zYy0xLjcgMC0zLTEuMy0zLTNzMS4zLTMgMy0zYzYuOSAwIDEzLjUtMi43IDE4LjQtNy42IDYuNC02LjQgOS0xNS41IDYuOS0yNC40LS40LTEuNi42LTMuMiAyLjItMy42IDEuNi0uNCAzLjIuNiAzLjYgMi4yQzg2IDU1LjggODIuOSA2Ny4xIDc1IDc1IDY4LjkgODEgNjAuOSA4NC4zIDUyLjMgODQuM3pNNzMgMzVjLS44IDAtMS41LS4zLTIuMS0uOUw3MC43IDM0Yy0xLjItMS4yLTEuMi0zLjEgMC00LjIgMS4yLTEuMiAzLjEtMS4yIDQuMiAwbC4yLjJjMS4yIDEuMiAxLjIgMy4xIDAgNC4yQzc0LjUgMzQuNyA3My44IDM1IDczIDM1eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiM0NDRiNTQiIGQ9Ik01Mi4zIDkwLjNjLTkuNyAwLTE5LjUtMy43LTI2LjktMTEuMS0xNC44LTE0LjgtMTQuOC0zOC45IDAtNTMuNyAxNC44LTE0LjggMzguOS0xNC44IDUzLjcgMGgwQzk0IDQwLjMgOTQgNjQuNCA3OS4yIDc5LjIgNzEuOCA4Ni42IDYyLjEgOTAuMyA1Mi4zIDkwLjN6TTUyLjMgMjAuNGMtOC4yIDAtMTYuNCAzLjEtMjIuNiA5LjQtMTIuNSAxMi41LTEyLjUgMzIuOCAwIDQ1LjNDNDIuMiA4Ny40IDYyLjUgODcuNCA3NSA3NWMxMi41LTEyLjUgMTIuNS0zMi44IDAtNDUuM0M2OC43IDIzLjUgNjAuNSAyMC40IDUyLjMgMjAuNHpNMTExIDk4LjNMOTguMyA4NS42Yy0xLjctMS43LTQtMi42LTYuNC0yLjYtMS40IDAtMi43LjMtMy45LjlsLTIuNS0yLjVjLTEuMi0xLjItMy4xLTEuMi00LjIgMC0xLjIgMS4yLTEuMiAzLjEgMCA0LjJsMi41IDIuNWMtLjYgMS4yLS45IDIuNS0uOSAzLjkgMCAyLjQuOSA0LjcgMi42IDYuNEw5OC4zIDExMWMxLjggMS44IDQuMSAyLjYgNi40IDIuNnM0LjYtLjkgNi40LTIuNmwwIDBDMTE0LjUgMTA3LjUgMTE0LjUgMTAxLjggMTExIDk4LjN6TTEwNi44IDEwNi44Yy0xLjIgMS4yLTMuMSAxLjItNC4yIDBMODkuOCA5NC4xYy0uNi0uNi0uOS0xLjMtLjktMi4xcy4zLTEuNi45LTIuMWMuNi0uNiAxLjMtLjkgMi4xLS45czEuNi4zIDIuMS45bDEyLjcgMTIuN0MxMDggMTAzLjcgMTA4IDEwNS42IDEwNi44IDEwNi44eiI+PC9wYXRoPjwvc3ZnPg==">
+                        </button>
+                    </form>
+                </div>
+
+                <div class="contents container">
+                    <div id="weather" class="p-3">
+                        <div class="weather-title">
+                            <h1>{{ city }} {{ country }}</h1>
+                            <p>{{ new Date().toLocaleString() }}</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm col-md-8">
+                                <div class="weather-status">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img v-bind:src="icon" alt="" class="weather-icon">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p class="current-temp">{{currentTemp}}</p>
+                                            <p>{{overcast}}</p>
+                                            <p>{{feelsLike}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm col-md-4">
+                                <div id="info" class="icon-wrap">
+                                    <div class="row">
+                                        <div class="col col-sm col-md-6">
+                                            <p class="wi wi-sunrise"></p>
+                                            <p>{{sunrise}}</p>
+                                        </div>
+                                        <div class="col col-sm col-md-6">
+                                            <p class="wi wi-sunset"></p>
+                                            <p>{{sunset}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-sm col-md-4">
+                                            <p class="wi wi-humidity"></p> <p>{{humidity}}</p>
+                                        </div>
+                                        <div class="col col-sm col-md-4">
+                                            <p class="wi wi-barometer"></p> <p>{{pressure}}</p>
+                                        </div>
+                                        <div class="col col-sm col-md-4">
+                                            <p class="wi wi-strong-wind"></p> <p>{{wind}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-sm col-md-6">
+                                            <p>{{minTemp}}</p>
+                                        </div>
+                                        <div class="col col-sm col-md-6">
+                                            <p>{{maxTemp}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="places">
+                <div class="container">
+                    <h2>{{ near }}</h2><br>
+                    <div class="row">
+                        <div v-for="venues in venues" class="panel-wrapper col-sm-12 col-md-4">
+                            <div class="panel p-3">
+                                <h5>{{ venues.name }}</h5>
+                                <p class="font-italic">{{ venues.location.address }}</p>
+                                <p>{{ venues.location.distance }}</p>
+                                <p>{{ venues.location.city }}</p>
+                                <p>{{ venues.location.state }}</p>
+                                <p>{{ venues.location.country }}</p>
+                                <p>{{ venues.categories.name }}</p>
+                                <p><a href="#" class="btn btn-link mt-3">{{ venueButton }}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="node_modules/jquery/dist/jquery.js"></script>
+        <script src="node_modules/vue/dist/vue.js"></script>
+        <script src="axios.min.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="city.list.json"></script>
+        <script src="app.js"></script>
+  </body>
+</html>
