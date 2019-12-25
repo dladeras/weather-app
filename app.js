@@ -34,17 +34,6 @@ var weatherApp = new Vue({
       // var url1 = 'http://openweathermap.org/data/2.5/forecast/daily?id=524901&lang=zh_cn&appid=d8dc20c3264fd9ad006e15e190adbbb9';
       var url1 = 'http://api.openweathermap.org/data/2.5/weather?q=' + this.name + '&units=metric&APPID=d8dc20c3264fd9ad006e15e190adbbb9';
 
-      axios.get(url1)
-        .then(response => {
-
-          this.name = response.data.name;
-          this.city = response.data.name + ',';
-
-          })
-          .catch(error => {
-            console.log(error);
-          });
-
       // Get data from Open Weather API
       axios.get(url1)
         .then(response => {
@@ -70,7 +59,6 @@ var weatherApp = new Vue({
           this.sunset = 'Sunset: ' + new Date(response.data.sys.sunset*1000).toLocaleTimeString("en-GB").slice(0,4);
 
           let url2 = 'https://api.foursquare.com/v2/venues/search?ll=' + this.lat + ',' + this.lon + '&limit=6&client_id=MTIKIOHCMAGIICVM3NMTF2JQI5WLUKBEW2DSEYIKSYYXAGOT&client_secret=YWHVCIDS0P2MDJQLQKY5PV1YKRRTVGJ4SMAHTYRU2PWU1CH0&v=20191216';
-          console.log(url1);
 
           // Get data from Foursquare API
           axios
@@ -85,10 +73,6 @@ var weatherApp = new Vue({
               this.venuePrefix = response.data.response.venues[0].categories[0].icon.prefix;
               this.venueSuffix = response.data.response.venues[0].categories[0].icon.suffix;
               this.venueButton = 'Learn More';
-              console.log(this.venueName);
-              console.log(url2);
-              console.log(url1);
-              console.log(this.lat + this.lon);
             })
         })
 
